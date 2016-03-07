@@ -255,6 +255,9 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 14 14)
+  (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+  ;; 显示行号
+  (add-hook 'find-file-hooks (lambda () (linum-mode 1)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
