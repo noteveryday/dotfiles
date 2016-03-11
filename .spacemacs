@@ -216,7 +216,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers 'relative
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -254,11 +254,69 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 14 14)
+  (spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 13 16)
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
-  ;; 显示行号
-  (add-hook 'find-file-hooks (lambda () (linum-mode 1)))
-  )
+  (setq powerline-default-separator 'arrow)
+  (setq-default evil-escape-key-sequence "fd")
+  (setq org-todo-keywords  
+        '((sequence "TODO(t)""DOING(o)" "|" "DONE(d)" "|" "DELAY(a@/!)")
+          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+  (setq org-todo-keyword-faces
+        ;;'(("TODO" . org-warning)
+        ;  ("DOING" . "yellow")
+        ;  ("WAIT" . "orange")
+        ;  ("DONE" . "green")
+        ;  ("DELAY" . (:foreground "blue" :background "red"))
+        ;  ("CANCELED" . (:background "red" :weight bold))
+        (quote (("TODO" :foreground "red" :weight bold)
+                ("DOING" :foreground "#149914" :weight bold)
+                ("DELAY" :foreground "yellow" :weight bold)
+                ("DONE" :foreground "#11aa22" :weight bold)
+                ("WAITING" :foreground "orange" :weight bold)
+                ("HOLD" :foreground "magenta" :weight bold)
+                ("CANCELLED" :foreground "#e50067" :weight bold)
+                ("MEETING" :foreground "#949526" :weight bold)
+                ("PHONE" :foreground "#996666" :weight bold))))
+  (setq org-agenda-files (quote ("~/org" )))
+  (setq org-default-notes-file "~/org/gtd.org")
+
+  (setq org-capture-templates
+            '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Workspace")
+               "* TODO [#B] %?\n  %i\n"
+               :empty-lines 1)
+              ("n" "notes" entry (file+headline "~/org/notes.org" "Quick notes")
+               "* TODO [#C] %?\n  %i\n %U"
+               :empty-lines 1)
+              ("b" "Blog Ideas" entry (file+headline "~/org/notes.org" "Blog Ideas")
+               "* TODO [#B] %?\n  %i\n %U"
+               :empty-lines 1)
+              ("w" "work" entry (file+headline "~/org/gtd.org" "Cocos2D-X")
+               "* TODO [#A] %?\n  %i\n %U"
+               :empty-lines 1)
+              ("l" "links" entry (file+headline "~/org/notes.org" "Quick notes")
+               "* TODO [#C] %?\n  %i\n %a \n %U"
+               :empty-lines 1)
+              ("j" "Journal Entry"
+               entry (file+datetree "~/org/journal.org")
+               "* %?"
+               :empty-lines 1)))
+
+      ;;An entry without a cookie is treated just like priority ' B '.
+      ;;So when create new task, they are default 重要且紧急
+      (setq org-agenda-custom-commands
+            '(
+              ("w" . "任务安排")
+              ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
+              ("wb" "重要且不紧急的任务" tags-todo "-Weekly-Monthly-Daily+PRIORITY=\"B\"")
+              ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
+              ("b" "Blog" tags-todo "BLOG")
+              ("p" . "项目安排")
+              ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
+              ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
+              ("W" "Weekly Review"
+               ((stuck "")            ;; review stuck projects as designated by org-stuck-projects
+                (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
+                ))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
