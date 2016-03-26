@@ -30,11 +30,12 @@ values."
      markdown
      org
      html
+     (colors :variables colors-enable-rainbow-identifiers t)
      (colors :variables
              colors-enable-nyan-cat-progress-bar t)
      (shell :variables
-            shell-default-position 'full
-            shell-default-shell 'ansi-term
+            shell-default-position 'bottom
+            shell-default-shell 'eshell
             shell-default-term-shell "/bin/zsh")
      (chinese :variables chinese-default-input-method 'wubi
               chinese-enable-fcitx t) 
@@ -106,7 +107,9 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(
+                         solarized-dark
+                         spacemacs-dark
                          spacemacs-light
                          solarized-light
                          solarized-dark
@@ -255,10 +258,13 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+  (setq-default evil-escape-key-sequence "fd")
   (spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 13 16)
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (setq powerline-default-separator 'arrow)
 ;  (setq-default evil-escape-key-sequence "fd")
+=======
+>>>>>>> 1572b8ea9d766aded6728214d572d7bc100a22c7
   (setq org-todo-keywords  
         '((sequence "TODO(t)""DOING(o)" "|" "DONE(d)" "|" "DELAY(a@/!)")
           (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
@@ -270,14 +276,14 @@ layers configuration. You are free to put any user code."
         ;  ("DELAY" . (:foreground "blue" :background "red"))
         ;  ("CANCELED" . (:background "red" :weight bold))
         (quote (("TODO" :foreground "red" :weight bold)
-                ("DOING" :foreground "#149914" :weight bold)
+                ("DOING" :foreground "#813594" :weight bold)
                 ("DELAY" :foreground "yellow" :weight bold)
                 ("DONE" :foreground "#11aa22" :weight bold)
                 ("WAITING" :foreground "orange" :weight bold)
                 ("HOLD" :foreground "magenta" :weight bold)
                 ("CANCELLED" :foreground "#e50067" :weight bold)
-                ("MEETING" :foreground "#949526" :weight bold)
-                ("PHONE" :foreground "#996666" :weight bold))))
+                ("MEETING" :foreground "#9400aa" :weight bold)
+                ("PHONE" :foreground "#9900ff" :weight bold))))
   (setq org-agenda-files (quote ("~/org" )))
   (setq org-default-notes-file "~/org/gtd.org")
 
@@ -319,5 +325,6 @@ layers configuration. You are free to put any user code."
                 (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
                 ))))
 
+;;rainbow-mode SPC t C c 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
