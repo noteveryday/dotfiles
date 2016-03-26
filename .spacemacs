@@ -37,8 +37,9 @@ values."
             shell-default-shell 'ansi-term
             shell-default-term-shell "/bin/zsh")
      (chinese :variables chinese-default-input-method 'wubi
-              chinese-enable-fcitx t
-              chinese-enable-youdao-dict t) 
+              chinese-enable-fcitx t) 
+     (python :variables
+             python-enable-yapf-format-on-save t)
      ;; (shell :variables
      ;;        shell-default-height 30p拼音输入法
      ;;        shell-default-position 'bottom)
@@ -257,7 +258,7 @@ layers configuration. You are free to put any user code."
   (spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 13 16)
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (setq powerline-default-separator 'arrow)
-  (setq-default evil-escape-key-sequence "fd")
+;  (setq-default evil-escape-key-sequence "fd")
   (setq org-todo-keywords  
         '((sequence "TODO(t)""DOING(o)" "|" "DONE(d)" "|" "DELAY(a@/!)")
           (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
