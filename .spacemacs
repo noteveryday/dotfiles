@@ -30,9 +30,7 @@ values."
      markdown
      org
      html
-     python
      (colors :variables colors-enable-rainbow-identifiers t)
-     
      (colors :variables
              colors-enable-nyan-cat-progress-bar t)
      (shell :variables
@@ -40,8 +38,9 @@ values."
             shell-default-shell 'eshell
             shell-default-term-shell "/bin/zsh")
      (chinese :variables chinese-default-input-method 'wubi
-              chinese-enable-fcitx t
-              chinese-enable-youdao-dict t) 
+              chinese-enable-fcitx t) 
+     (python :variables
+             python-enable-yapf-format-on-save t)
      ;; (shell :variables
      ;;        shell-default-height 30p拼音输入法
      ;;        shell-default-position 'bottom)
@@ -261,8 +260,11 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq-default evil-escape-key-sequence "fd")
   (spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 13 16)
- ;; (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+  (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (setq powerline-default-separator 'arrow)
+;  (setq-default evil-escape-key-sequence "fd")
+=======
+>>>>>>> 1572b8ea9d766aded6728214d572d7bc100a22c7
   (setq org-todo-keywords  
         '((sequence "TODO(t)""DOING(o)" "|" "DONE(d)" "|" "DELAY(a@/!)")
           (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
