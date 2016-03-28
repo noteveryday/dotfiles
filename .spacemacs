@@ -279,7 +279,7 @@ layers configuration. You are free to put any user code."
                 ("DONE" :foreground "#11aa22" :weight bold)
                 ("WAITING" :foreground "orange" :weight bold)
                 ("HOLD" :foreground "magenta" :weight bold)
-                ("CANCELLED" :foreground "#e50067" :weight bold)
+                ("CANCELLED" :foreground "#e50067" :background "#118811" :weight bold)
                 ("MEETING" :foreground "#9400aa" :weight bold)
                 ("PHONE" :foreground "#9900ff" :weight bold))))
   (setq org-agenda-files (quote ("~/org" )))
@@ -305,7 +305,7 @@ layers configuration. You are free to put any user code."
                entry (file+datetree "~/org/journal.org")
                "* %?"
                :empty-lines 1)))
-
+(setq org-image-actual-width '(200))       ; Set width to 300
       ;;An entry without a cookie is treated just like priority ' B '.
       ;;So when create new task, they are default 重要且紧急
       (setq org-agenda-custom-commands
