@@ -23,15 +23,22 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
      better-defaults
      emacs-lisp
      ;; git
      markdown
      org
      html
-     (colors :variables colors-enable-rainbow-identifiers t)
      (colors :variables
+             colors-enable-rainbow-identifiers t
              colors-enable-nyan-cat-progress-bar t)
      (shell :variables
             shell-default-position 'bottom
@@ -108,13 +115,13 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         monokai
                          solarized-dark
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
                          solarized-dark
                          leuven
-                         monokai
                          zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -252,78 +259,86 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+  (setq tramp-ssh-controlmaster-options
+        "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
+  ;; (setq word-wrap t)
+  ;; (auto-indent-global-mode)
+  ;; (setq truncate-partial-width-windows nil)
+  ;; (setq indent-guide-global-mode t)
   )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (setq-default evil-escape-key-sequence "fd")
-  (spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 13 16)
-  (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
-  (setq powerline-default-separator 'arrow)
-;  (setq-default evil-escape-key-sequence "fd")
-=======
->>>>>>> 1572b8ea9d766aded6728214d572d7bc100a22c7
-  (setq org-todo-keywords  
+(spacemacs/toggle-indent-guide-globally-on)
+(spacemacs/toggle-hungry-delete-on)
+(setq rainbow-mode t)
+(spacemacs/toggle-truncate-lines-off)
+(spacemacs/toggle-visual-line-navigation-on)
+;; (setq-default evil-escape-key-sequence "fd")
+(spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 13 16)
+(setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+(setq powerline-default-separator 'arrow)
+                                        ;  (setq-default evil-escape-key-sequence "fd")
+(setq org-todo-keywords  
         '((sequence "TODO(t)""DOING(o)" "|" "DONE(d)" "|" "DELAY(a@/!)")
           (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
-  (setq org-todo-keyword-faces
-        ;;'(("TODO" . org-warning)
-        ;  ("DOING" . "yellow")
-        ;  ("WAIT" . "orange")
-        ;  ("DONE" . "green")
-        ;  ("DELAY" . (:foreground "blue" :background "red"))
-        ;  ("CANCELED" . (:background "red" :weight bold))
-        (quote (("TODO" :foreground "red" :weight bold)
-                ("DOING" :foreground "#813594" :weight bold)
-                ("DELAY" :foreground "yellow" :weight bold)
-                ("DONE" :foreground "#11aa22" :weight bold)
-                ("WAITING" :foreground "orange" :weight bold)
-                ("HOLD" :foreground "magenta" :weight bold)
-                ("CANCELLED" :foreground "#e50067" :background "#118811" :weight bold)
-                ("MEETING" :foreground "#9400aa" :weight bold)
-                ("PHONE" :foreground "#9900ff" :weight bold))))
-  (setq org-agenda-files (quote ("~/org" )))
-  (setq org-default-notes-file "~/org/gtd.org")
-
-  (setq org-capture-templates
-            '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Workspace")
-               "* TODO [#B] %?\n  %i\n"
-               :empty-lines 1)
-              ("n" "notes" entry (file+headline "~/org/notes.org" "Quick notes")
-               "* TODO [#C] %?\n  %i\n %U"
-               :empty-lines 1)
-              ("b" "Blog Ideas" entry (file+headline "~/org/notes.org" "Blog Ideas")
-               "* TODO [#B] %?\n  %i\n %U"
-               :empty-lines 1)
-              ("w" "work" entry (file+headline "~/org/gtd.org" "Cocos2D-X")
-               "* TODO [#A] %?\n  %i\n %U"
-               :empty-lines 1)
-              ("l" "links" entry (file+headline "~/org/notes.org" "Quick notes")
-               "* TODO [#C] %?\n  %i\n %a \n %U"
-               :empty-lines 1)
-              ("j" "Journal Entry"
-               entry (file+datetree "~/org/journal.org")
-               "* %?"
-               :empty-lines 1)))
+(setq org-todo-keyword-faces
+      ;;'(("TODO" . org-warning)
+                                        ;  ("DOING" . "yellow")
+                                        ;  ("WAIT" . "orange")
+                                        ;  ("DONE" . "green")
+                                        ;  ("DELAY" . (:foreground "blue" :background "red"))
+                                        ;  ("CANCELED" . (:background "red" :weight bold))
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("DOING" :foreground "#813594" :weight bold)
+              ("DELAY" :foreground "yellow" :weight bold)
+              ("DONE" :foreground "#11aa22" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "#e50067" :background "#118811" :weight bold)
+              ("MEETING" :foreground "#9400aa" :weight bold)
+              ("PHONE" :foreground "#9900ff" :weight bold))))
+(setq org-agenda-files (quote ("~/org" )))
+(setq org-default-notes-file "~/org/gtd.org")
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Workspace")
+         "* TODO [#B] %?\n  %i\n"
+         :empty-lines 1)
+        ("n" "notes" entry (file+headline "~/org/notes.org" "Quick notes")
+         "* TODO [#C] %?\n  %i\n %U"
+         :empty-lines 1)
+        ("b" "Blog Ideas" entry (file+headline "~/org/notes.org" "Blog Ideas")
+         "* TODO [#B] %?\n  %i\n %U"
+         :empty-lines 1)
+        ("w" "work" entry (file+headline "~/org/gtd.org" "Cocos2D-X")
+         "* TODO [#A] %?\n  %i\n %U"
+         :empty-lines 1)
+        ("l" "links" entry (file+headline "~/org/notes.org" "Quick notes")
+         "* TODO [#C] %?\n  %i\n %a \n %U"
+         :empty-lines 1)
+        ("j" "Journal Entry"
+         entry (file+datetree "~/org/journal.org")
+         "* %?"
+         :empty-lines 1)))
 (setq org-image-actual-width '(200))       ; Set width to 300
-      ;;An entry without a cookie is treated just like priority ' B '.
-      ;;So when create new task, they are default 重要且紧急
-      (setq org-agenda-custom-commands
-            '(
-              ("w" . "任务安排")
-              ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
-              ("wb" "重要且不紧急的任务" tags-todo "-Weekly-Monthly-Daily+PRIORITY=\"B\"")
-              ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
-              ("b" "Blog" tags-todo "BLOG")
-              ("p" . "项目安排")
-              ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
-              ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
-              ("W" "Weekly Review"
-               ((stuck "")            ;; review stuck projects as designated by org-stuck-projects
-                (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
-                ))))
+;;An entry without a cookie is treated just like priority ' B '.
+;;So when create new task, they are default 重要且紧急
+(setq org-agenda-custom-commands
+      '(
+        ("w" . "任务安排")
+        ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
+        ("wb" "重要且不紧急的任务" tags-todo "-Weekly-Monthly-Daily+PRIORITY=\"B\"")
+        ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
+        ("b" "Blog" tags-todo "BLOG")
+        ("p" . "项目安排")
+        ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
+        ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
+        ("W" "Weekly Review"
+         ((stuck "")            ;; review stuck projects as designated by org-stuck-projects
+          (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
+          ))))
 
 ;;rainbow-mode SPC t C c 
 ;; Do not write anything past this comment. This is where Emacs will
