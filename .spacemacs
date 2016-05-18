@@ -62,7 +62,14 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                   chinese/init-chinese-wbim 
+                                   chinese-pyim
+                                   smooth-scrolling
+                                   pangu-spacing
+                                   org-bullets
+                                   js2-refactor
+                                   )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -277,14 +284,19 @@ layers configuration. You are free to put any user code."
 (setq rainbow-mode t)
 (spacemacs/toggle-truncate-lines-off)
 (spacemacs/toggle-visual-line-navigation-on)
+(setq powerline-default-separator 'slant)
+;k(setq powerline-default-separator 'arrow)
+(spaceline-compile)
 ;; (setq-default evil-escape-key-sequence "fd")
 ;(spacemacs//set-monospaced-font   "Source Code Pro" "Source Han Sans CN" 15 18)
 ;(setq face-font-rescale-alist '(("Microsoft Yahei" . 1.2) ("WWenQuanYi Micro Hei Mon" . 1.2)))
 ;(spacemacs//set-monospaced-font   "Source Code Pro" "Microsoft Yahei" 16 16)
 (spacemacs//set-monospaced-font   "Source Code Pro" "WenQuanYi Micro Hei Mono" 15 18)
 ;(setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
-(setq powerline-default-separator 'arrow)
                                         ;  (setq-default evil-escape-key-sequence "fd")
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
 (setq org-todo-keywords  
         '((sequence "TODO(t)""DOING(o)" "|" "DONE(d)" "|" "DELAY(a@/!)")
           (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
@@ -354,7 +366,7 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (chinese-pyim web-beautify json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode powerline hydra spinner parent-mode projectile pkg-info epl flx smartparens iedit anzu highlight packed dash s helm avy helm-core async popup package-build bind-key bind-map evil xterm-color web-mode toc-org tagedit slim-mode shell-pop scss-mode sass-mode rainbow-mode rainbow-identifiers pyvenv pytest pyenv-mode py-yapf pip-requirements pangu-spacing org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets multi-term mmm-mode markdown-toc markdown-mode less-css-mode jade-mode hy-mode htmlize helm-pydoc helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gh-md find-by-pinyin-dired fcitx eshell-prompt-extras esh-help emmet-mode cython-mode company-web web-completion-data company-statistics company-quickhelp pos-tip company-anaconda company chinese-wbim auto-yasnippet yasnippet anaconda-mode pythonic f ace-pinyin ace-jump-mode ac-ispell auto-complete monokai-theme ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package spacemacs-theme spaceline smooth-scrolling restart-emacs rainbow-delimiters quelpa popwin persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (pinyinlib chinese-pyim web-beautify json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode powerline hydra spinner parent-mode projectile pkg-info epl flx smartparens iedit anzu highlight packed dash s helm avy helm-core async popup package-build bind-key bind-map evil xterm-color web-mode toc-org tagedit slim-mode shell-pop scss-mode sass-mode rainbow-mode rainbow-identifiers pyvenv pytest pyenv-mode py-yapf pip-requirements pangu-spacing org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets multi-term mmm-mode markdown-toc markdown-mode less-css-mode jade-mode hy-mode htmlize helm-pydoc helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gh-md find-by-pinyin-dired fcitx eshell-prompt-extras esh-help emmet-mode cython-mode company-web web-completion-data company-statistics company-quickhelp pos-tip company-anaconda company chinese-wbim auto-yasnippet yasnippet anaconda-mode pythonic f ace-pinyin ace-jump-mode ac-ispell auto-complete monokai-theme ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package spacemacs-theme spaceline smooth-scrolling restart-emacs rainbow-delimiters quelpa popwin persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
